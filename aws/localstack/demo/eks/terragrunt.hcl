@@ -13,7 +13,7 @@ dependency "vpc" {
 }
 
 terraform {
-    source  = "tfr:///terraform-aws-modules/eks/aws?version=20.0.0"
+  source = "tfr:///terraform-aws-modules/eks/aws?version=20.0.0"
 }
 
 generate "provider" {
@@ -30,39 +30,39 @@ EOF
 }
 
 inputs = {
-    bootstrap_self_managed_addons = false
-    cluster_name    = "terragrunt-cluster"
-    cluster_version = "1.29"
-    cluster_endpoint_public_access  = true
-    cluster_addons = {
-        coredns = {
-            most_recent = true
-        }
-        kube-proxy = {
-            most_recent = true
-        }
-        vpc-cni = {
-            most_recent = true
-        }
+  bootstrap_self_managed_addons  = false
+  cluster_name                   = "terragrunt-cluster"
+  cluster_version                = "1.29"
+  cluster_endpoint_public_access = true
+  # cluster_addons = {
+  #     coredns = {
+  #         most_recent = true
+  #     }
+  #     kube-proxy = {
+  #         most_recent = true
+  #     }
+  #     vpc-cni = {
+  #         most_recent = true
+  #     }
+  # }
+  vpc_id     = dependency.vpc.outputs.vpc_id
+  subnet_ids = dependency.vpc.outputs.private_subnets
+  # EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    instance_types = ["t2.micro"]
+  }
+  eks_managed_node_groups = {
+    example = {
+      min_size       = 1
+      max_size       = 1
+      desired_size   = 1
+      instance_types = ["t3.micro"]
+      capacity_type  = "SPOT"
     }
-    vpc_id                   = dependency.vpc.outputs.vpc_id
-    subnet_ids               = dependency.vpc.outputs.private_subnets
-    # EKS Managed Node Group(s)
-    eks_managed_node_group_defaults = {
-        instance_types = ["t2.micro"]
-    }
-    eks_managed_node_groups = {
-        example = {
-        min_size     = 1
-        max_size     = 1
-        desired_size = 1
-        instance_types = ["t3.micro"]
-        capacity_type  = "SPOT"
-        }
-    }
-    tags = {
-        Environment = "dev"
-        Terraform   = "true"
-        Terragrunt  = "true"
-    }
+  }
+  # tags = {
+  #     Environment = "dev"
+  #     Terraform   = "true"
+  #     Terragrunt  = "true"
+  # }
 }
