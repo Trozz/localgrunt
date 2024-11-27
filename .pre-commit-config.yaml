@@ -1,0 +1,27 @@
+repos:
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.74.1
+  hooks:
+    - id: terragrunt_fmt
+- repo: https://github.com/gruntwork-io/pre-commit
+  rev: v0.1.17
+  hooks:
+    - id: terragrunt-hclfmt
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: detect-aws-credentials
+      args:
+        - --allow-missing-credentials
+    - id: detect-private-key
+    - id: check-case-conflict
+    - id: check-yaml
+    - id: sort-simple-yaml
+- repo: https://github.com/homebysix/pre-commit-macadmin
+  rev: v1.12.3
+  hooks:
+    - id: check-git-config-email
+      args: ['--domains', "gremlin.group", "leer.dev", "trozzy.net"]
