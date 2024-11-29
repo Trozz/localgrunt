@@ -10,6 +10,10 @@ locals {
 
 dependency "vpc" {
   config_path = find_in_parent_folders("vpc")
+  mock_outputs = {
+    vpc_id         = "vpc-12345678"
+    private_subnets = ["subnet-12345678", "subnet-23456789"]
+  }
 }
 
 terraform {

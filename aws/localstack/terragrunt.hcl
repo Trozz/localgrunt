@@ -9,7 +9,7 @@ remote_state {
     #bucket                = "trozz-${get_aws_account_id()}-tfstate"
     bucket                = "trozz-tfstate"
     key                   = "${path_relative_to_include()}/terraform.tfstate"
-    region                = "eu-west-2"
+    region                = "eu-west-1"
     disable_bucket_update = true
     dynamodb_table        = "TerraformStateLocks"
 
