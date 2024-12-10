@@ -24,5 +24,6 @@ aws_secret_access_key = test
 EOF
 
 cd aws/localstack/demo/vpc
+export USE_LOCALSTACK=true
 terragrunt apply --terragrunt-tfpath tflocal
 ```
